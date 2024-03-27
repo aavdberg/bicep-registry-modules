@@ -378,7 +378,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-11-01' = {
     storageProfile: {
       imageReference: imageReference
       osDisk: {
-        name: '${name}-disk-os-01'
+        name: name
         createOption: contains(osDisk, 'createOption') ? osDisk.createOption : 'FromImage'
         deleteOption: contains(osDisk, 'deleteOption') ? osDisk.deleteOption : 'Delete'
         diskSizeGB: osDisk.diskSizeGB
@@ -392,7 +392,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2022-11-01' = {
       }
       dataDisks: [for (dataDisk, index) in dataDisks: {
         lun: index
-        name: '${name}-disk-data-${padLeft((index + 1), 2, '0')}'
+        name: dataDisk.name
         diskSizeGB: dataDisk.diskSizeGB
         createOption: contains(dataDisk, 'createOption') ? dataDisk.createOption : 'Empty'
         deleteOption: contains(dataDisk, 'deleteOption') ? dataDisk.deleteOption : 'Delete'
